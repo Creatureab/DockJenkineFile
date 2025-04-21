@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'dockjenkins-java-app'
-        // DOCKER_CREDENTIALS_ID = 'dockerhub-creds' // Not needed if not pushing
     }
 
     stages {
@@ -21,13 +20,15 @@ pipeline {
             }
         }
 
-        // Removed Push to Docker Hub stage since you don't have an account
-
-        stage('Run Image (Optional)') {
+        stage('Compile Java Class') {
             steps {
-                script {
-                    sh "docker run --rm ${IMAGE_NAME}:${BUILD_NUMBER}" // optional: runs the image
-                }
+                bat 'javac Employee.java'
+            }
+        }
+
+        stage('Run Java Class') {
+            steps {
+                bat 'java Employee'
             }
         }
     }
