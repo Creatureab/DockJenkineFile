@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'dockjenkins-java-app'
-        DOCKER_CREDENTIALS_ID = 'dockerhub-creds'
+        // DOCKER_CREDENTIALS_ID = 'dockerhub-creds' // Not needed if not pushing
     }
 
     stages {
@@ -21,13 +21,12 @@ pipeline {
             }
         }
 
-        stage('Push to Docker Hub') {
+        // Removed Push to Docker Hub stage since you don't have an account
+
+        stage('Run Image (Optional)') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
-                        dockerImage.push()
-                        dockerImage.push("latest")
-                    }
+                    sh "docker run --rm ${IMAGE_NAME}:${BUILD_NUMBER}" // optional: runs the image
                 }
             }
         }
