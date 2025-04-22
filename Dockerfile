@@ -6,4 +6,4 @@ COPY . .
 
 RUN javac Emplooye.java
 
-CMD ["java", "-cp", ".", "Employee"]
+CMD ["java", "Employee"]
